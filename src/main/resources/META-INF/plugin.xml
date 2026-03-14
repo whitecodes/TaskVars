@@ -8,13 +8,14 @@
     <name>TaskVars</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://www.yourcompany.com">YourCompany</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
+    <vendor url="https://example.org">TaskVars Author</vendor>
+
     <description><![CDATA[
-        Enter short description for your plugin here.<br>
-        <em>most HTML tags may be used</em>
+        Provides a live template macro that expands to the current task's summary
+        from the built-in Tasks plugin.
     ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -27,7 +28,9 @@
     <!-- Extensions defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="MyToolWindow" factoryClass="com.wille.taskvars.MyToolWindowFactory"
-                    icon="AllIcons.Toolwindows.ToolWindowPalette"/>
+        <!-- The plugin no longer provides a tool window UI. Instead we register
+             a live template macro that exposes the current task information to
+             live templates. -->
+        <liveTemplateMacro implementation="com.wille.taskvars.CurrentTaskMacro"/>
     </extensions>
 </idea-plugin>
