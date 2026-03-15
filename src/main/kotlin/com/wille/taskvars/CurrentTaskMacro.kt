@@ -6,7 +6,6 @@ import com.intellij.codeInsight.template.macro.MacroBase
 import com.intellij.codeInsight.template.Result
 import com.intellij.codeInsight.template.TextResult
 import com.intellij.openapi.project.Project
-import com.intellij.tasks.Task
 import com.intellij.tasks.TaskManager
 
 /**

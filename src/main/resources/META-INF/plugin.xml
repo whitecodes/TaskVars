@@ -24,7 +24,6 @@
     <!-- Declare dependency on the built-in Tasks plugin so TaskManager API is available -->
     <depends>com.intellij.tasks</depends>
 
-    <resource-bundle>messages.MyMessageBundle</resource-bundle>
     <!-- Extensions defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
