@@ -1,117 +1,137 @@
-# IntelliJ Platform Plugin Template
+# TaskVars - IntelliJ IDEA 插件
 
-[![Twitter Follow](https://img.shields.io/badge/follow-%40JBPlatform-1DA1F2?logo=twitter)](https://twitter.com/JBPlatform)
-[![Developers Forum](https://img.shields.io/badge/JetBrains%20Platform-Join-blue)][jb:forum]
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ%20IDEA-2025.3.3-blueviolet)
 
-## Plugin template structure
+## 📋 项目简介
 
-A generated project contains the following content structure:
+TaskVars 是一个为 IntelliJ IDEA 开发的轻量级插件，它提供了一个**实时模板宏（Live Template Macro）**，可以在代码模板中自动插入当前任务的摘要信息。
+
+## ✨ 核心功能
+
+- **任务信息插入**：在实时模板中使用 `currentTask()` 宏，自动获取并插入当前激活任务的摘要
+- **无缝集成**：与 IntelliJ IDEA 内置的 Tasks 插件完美配合
+- **简洁高效**：无额外 UI 组件，不影响 IDE 性能
+
+## 🚀 使用方法
+
+### 前提条件
+
+1. 已在 IntelliJ IDEA 中启用并配置 **Tasks** 插件（默认已启用）
+2. 已创建或打开一个任务（通过 **Tools → Tasks & Contexts → Open Task**）
+
+### 配置实时模板
+
+1. 打开 **Settings/Preferences** (`Ctrl+Alt+S`)
+2. 导航到 **Editor → Live Templates**
+3. 选择或创建一个模板组
+4. 添加新模板，例如：
+   - **缩写**: `tasklog`
+   - **模板正文**: 
+     ```
+     // Task: $TASK$
+     $END$
+     ```
+   - 点击 **Edit variables** 按钮
+   - 将 `TASK` 变量的表达式设置为 `currentTask()`
+5. 应用设置并保存
+
+### 使用示例
+
+1. 在编辑器中输入模板缩写 `tasklog`
+2. 按下 `Tab` 键展开模板
+3. 自动生成的内容将包含当前任务的摘要，例如：
+   ```
+   // Task: Fix login bug
+   ```
+
+## 🔨 开发与构建
+
+### 环境要求
+
+- **JDK**: 21 或更高版本
+- **Gradle**: 使用项目内置的 Gradle Wrapper
+- **IntelliJ IDEA**: 2025.3.3 或兼容版本
+
+### 构建项目
+
+```bash
+# 克隆项目
+git clone <repository-url>
+cd TaskVars
+
+# 构建插件
+./gradlew build
+
+# 构建并运行测试
+./gradlew check
+```
+
+### 运行插件
+
+在 IntelliJ IDEA 中：
+
+1. 打开项目
+2. 使用预定义的运行配置 **Run Plugin**（或执行 `./gradlew runIde`）
+3. 将在新的 IDE 实例中运行插件，可用于调试
+
+### 运行测试
+
+```bash
+./gradlew test
+```
+
+## 📦 插件安装
+
+### 方式一：从本地文件安装
+
+1. 在项目根目录执行构建：
+   ```bash
+   ./gradlew buildPlugin
+   ```
+2. 生成的插件文件位于 `build/distributions/TaskVars-1.0-SNAPSHOT.zip`
+3. 在 IntelliJ IDEA 中：
+   - **Settings/Preferences → Plugins → ⚙️ → Install Plugin from Disk**
+   - 选择生成的 ZIP 文件
+   - 重启 IDE
+
+### 方式二：发布到 JetBrains Marketplace
+
+参考官方文档：[Publishing a Plugin](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html)
+
+## 📁 项目结构
 
 ```
-.
-├── .run/                   Predefined Run/Debug Configurations
-├── build/                  Output build directory
-├── gradle
-│   ├── wrapper/            Gradle Wrapper
-├── src                     Plugin sources
-│   ├── main
-│   │   ├── kotlin/         Kotlin production sources
-│   │   └── resources/      Resources - plugin.xml, icons, messages
-├── .gitignore              Git ignoring rules
-├── build.gradle.kts        Gradle build configuration
-├── gradle.properties       Gradle configuration properties
-├── gradlew                 *nix Gradle Wrapper script
-├── gradlew.bat             Windows Gradle Wrapper script
-├── README.md               README
-└── settings.gradle.kts     Gradle project settings
+TaskVars/
+├── src/
+│   └── main/
+│       ├── kotlin/                    # Kotlin 源代码
+│       │   └── com/wille/taskvars/
+│       │       └── CurrentTaskMacro.kt
+│       └── resources/
+│           └── META-INF/
+│               └── plugin.xml         # 插件配置文件
+├── build.gradle.kts                   # Gradle 构建配置
+├── settings.gradle.kts                # Gradle 项目设置
+└── README.md                          # 项目说明文档
 ```
 
-In addition to the configuration files, the most crucial part is the `src` directory, which contains our implementation
-and the manifest for our plugin – [plugin.xml][file:plugin.xml].
+## ⚠️ 注意事项
 
-> [!NOTE]
-> To use Java in your plugin, create the `/src/main/java` directory.
+- 该插件依赖内置的 **Tasks** 插件，请确保其已启用
+- `currentTask()` 宏仅在激活任务时返回有效内容，否则返回空字符串
+- 实时模板中的变量名称可以自定义，但表达式必须为 `currentTask()`
 
-## Plugin configuration file
+## 🔗 相关链接
 
-The plugin configuration file is a [plugin.xml][file:plugin.xml] file located in the `src/main/resources/META-INF`
-directory.
-It provides general information about the plugin, its dependencies, extensions, and listeners.
+- [IntelliJ Platform SDK 文档](https://plugins.jetbrains.com/docs/intellij)
+- [实时模板宏开发指南](https://plugins.jetbrains.com/docs/intellij/live-templates.html#macro)
+- [Tasks 插件 API 参考](https://plugins.jetbrains.com/docs/intellij/tasks-api.html)
 
-You can read more about this file in the [Plugin Configuration File][docs:plugin.xml] section of our documentation.
+## 📄 许可证
 
-If you're still not quite sure what this is all about, read our
-introduction: [What is the IntelliJ Platform?][docs:intro]
+MIT License
 
-$H$H Predefined Run/Debug configurations
+---
 
-Within the default project structure, there is a `.run` directory provided containing predefined *Run/Debug
-configurations* that expose corresponding Gradle tasks:
-
-| Configuration name | Description                                                                                                                                                                         |
-|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Run Plugin         | Runs [`:runIde`][gh:intellij-platform-gradle-plugin-runIde] IntelliJ Platform Gradle Plugin task. Use the *Debug* icon for plugin debugging.                                        |
-| Run Tests          | Runs [`:test`][gradle:lifecycle-tasks] Gradle task.                                                                                                                                 |
-| Run Verifications  | Runs [`:verifyPlugin`][gh:intellij-platform-gradle-plugin-verifyPlugin] IntelliJ Platform Gradle Plugin task to check the plugin compatibility against the specified IntelliJ IDEs. |
-
-> [!NOTE]
-> You can find the logs from the running task in the `idea.log` tab.
-
-## Publishing the plugin
-
-> [!TIP]
-> Make sure to follow all guidelines listed in [Publishing a Plugin][docs:publishing] to follow all recommended and
-> required steps.
-
-Releasing a plugin to [JetBrains Marketplace](https://plugins.jetbrains.com) is a straightforward operation that uses
-the `publishPlugin` Gradle task provided by
-the [intellij-platform-gradle-plugin][gh:intellij-platform-gradle-plugin-docs].
-
-You can also upload the plugin to the [JetBrains Plugin Repository](https://plugins.jetbrains.com/plugin/upload)
-manually via UI.
-
-## Useful links
-
-- [IntelliJ Platform SDK Plugin SDK][docs]
-- [IntelliJ Platform Gradle Plugin Documentation][gh:intellij-platform-gradle-plugin-docs]
-- [IntelliJ Platform Explorer][jb:ipe]
-- [JetBrains Marketplace Quality Guidelines][jb:quality-guidelines]
-- [IntelliJ Platform UI Guidelines][jb:ui-guidelines]
-- [JetBrains Marketplace Paid Plugins][jb:paid-plugins]
-- [IntelliJ SDK Code Samples][gh:code-samples]
-
-[docs]: https://plugins.jetbrains.com/docs/intellij
-
-[docs:intro]: https://plugins.jetbrains.com/docs/intellij/intellij-platform.html?from=IJPluginTemplate
-
-[docs:plugin.xml]: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html?from=IJPluginTemplate
-
-[docs:publishing]: https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate
-
-[file:plugin.xml]: ./src/main/resources/META-INF/plugin.xml
-
-[gh:code-samples]: https://github.com/JetBrains/intellij-sdk-code-samples
-
-[gh:intellij-platform-gradle-plugin]: https://github.com/JetBrains/intellij-platform-gradle-plugin
-
-[gh:intellij-platform-gradle-plugin-docs]: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
-
-[gh:intellij-platform-gradle-plugin-runIde]: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-tasks.html#runIde
-
-[gh:intellij-platform-gradle-plugin-verifyPlugin]: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-tasks.html#verifyPlugin
-
-[gradle:lifecycle-tasks]: https://docs.gradle.org/current/userguide/java_plugin.html#lifecycle_tasks
-
-[jb:github]: https://github.com/JetBrains/.github/blob/main/profile/README.md
-
-[jb:forum]: https://platform.jetbrains.com/
-
-[jb:quality-guidelines]: https://plugins.jetbrains.com/docs/marketplace/quality-guidelines.html
-
-[jb:paid-plugins]: https://plugins.jetbrains.com/docs/marketplace/paid-plugins-marketplace.html
-
-[jb:quality-guidelines]: https://plugins.jetbrains.com/docs/marketplace/quality-guidelines.html
-
-[jb:ipe]: https://jb.gg/ipe
-
-[jb:ui-guidelines]: https://jetbrains.github.io/ui
+**开发提示**：如需修改宏的行为（例如返回任务 ID、描述等），请编辑 `CurrentTaskMacro.kt` 中的 `calculateResult` 方法。
