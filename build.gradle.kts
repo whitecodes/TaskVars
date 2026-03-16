@@ -37,6 +37,7 @@ intellijPlatform {
             Initial version
         """.trimIndent()
     }
+    buildSearchableOptions = false
 }
 
 tasks {
