@@ -8,49 +8,9 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 10
-    commit-message:
-      prefix: "ci"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "github-actions"
-    groups:
-      github-actions:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
-          - "minor"
-          - "patch"
 
   # Gradle dependency updates
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 10
-    commit-message:
-      prefix: "build"
-      include: "scope"
-    labels:
-      - "dependencies"
-      - "gradle"
-    groups:
-      gradle-plugins:
-        patterns:
-          - "org.jetbrains.kotlin.*"
-          - "org.jetbrains.intellij.platform.*"
-        update-types:
-          - "major"
-          - "minor"
-          - "patch"
-      gradle-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "major"
-          - "minor"
-          - "patch"
-    # Include version constraints for major updates
-    versioning-strategy: "increase-all"
