@@ -86,18 +86,30 @@ cd TaskVars
 ### 方式一：从本地文件安装
 
 1. 在项目根目录执行构建：
-   ```bash
-   ./gradlew buildPlugin
-   ```
+    ```bash
+    ./gradlew buildPlugin
+    ```
 2. 生成的插件文件位于 `build/distributions/TaskVars-1.0-SNAPSHOT.zip`
 3. 在 IntelliJ IDEA 中：
-   - **Settings/Preferences → Plugins → ⚙️ → Install Plugin from Disk**
-   - 选择生成的 ZIP 文件
-   - 重启 IDE
+    - **Settings/Preferences → Plugins → ⚙️ → Install Plugin from Disk**
+    - 选择生成的 ZIP 文件
+    - 重启 IDE
 
 ### 方式二：发布到 JetBrains Marketplace
 
 参考官方文档：[Publishing a Plugin](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html)
+
+## 🔄 持续集成与部署
+
+本项目使用 GitHub Actions 进行自动化构建和发布。每当代码推送到 `main` 分支时，工作流会自动触发：
+
+1. 检出代码
+2. 设置 JDK 21 环境
+3. 构建项目并运行测试
+4. 生成插件包（ZIP 文件）
+5. 上传构建产物作为工作流制品
+
+您可以在 GitHub 仓库的 "Actions" 选项卡中查看构建历史和下载生成的插件包。
 
 ## 📁 项目结构
 
